@@ -22,10 +22,20 @@ public class Ekko {
                         " Bye. Hope to see you again soon!\n" +
                         "____________________________________________________________\n");
                 break;
+            } else if (input.equals("list")) {
+                System.out.println(
+                        "____________________________________________________________");
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.println(" " + (i + 1) + ". " + list.get(i));
+                }
+
+                System.out.println(
+                        "____________________________________________________________");
             } else {
+                list.add(input);
                 System.out.println(
                         "____________________________________________________________\n" +
-                        input + "\n" +
+                        " added: " + input + "\n" +
                         "____________________________________________________________");
             }
         }
