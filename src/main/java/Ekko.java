@@ -207,6 +207,25 @@ public class Ekko {
             System.out.println("Now you have " + list.size() + " tasks in the list.");
             System.out.println(
                     "____________________________________________________________");
+        } else if (input.startsWith("delete")) {
+            if (!input.matches("delete \\d+")) {
+                throw new EkkoException("Invalid delete format");
+            }
+
+            int index = Integer.parseInt(input.split(" ")[1]) - 1;
+
+            if (index < 0 || index >= list.size()) {
+                throw new EkkoException("Task number " + (index + 1) + " does not exist.");
+            }
+
+            Task removedTask = list.remove(index);
+
+            System.out.println(
+                    "____________________________________________________________\n" +
+                            "Noted. I've removed this task:\n" +
+                            "  [" + removedTask.getCategory() + "][" + removedTask.getStatusIcon() + "] " + removedTask + "\n" +
+                            "Now you have " + list.size() + " tasks in the list.\n" +
+                            "____________________________________________________________");
         } else {
             throw new EkkoException("Invalid command");
         }
