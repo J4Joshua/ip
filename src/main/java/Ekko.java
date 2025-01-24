@@ -10,21 +10,38 @@ public class Ekko {
         }
     }
 
+    public enum Category {
+        TODO("T"),
+        DEADLINE("D"),
+        EVENT("E");
+
+        private final String symbol;
+
+        Category(String symbol) {
+            this.symbol = symbol;
+        }
+        @Override
+        public String toString() {
+            return symbol;
+        }
+    }
+
     public static class Task {
         protected String description;
         protected boolean isDone;
-        protected Character category = 'N';
+        protected Category category;
 
-        public Task(String description) {
+        public Task(String description, Category category) {
             this.description = description;
             this.isDone = false;
+            this.category = category;
         }
 
         public String getStatusIcon() {
             return (isDone ? "X" : " "); // mark done task with X
         }
 
-        public Character getCategory() {
+        public Category getCategory() {
             return this.category;
         }
 
@@ -44,16 +61,14 @@ public class Ekko {
 
     public static class ToDo extends Task {
         public ToDo(String description) {
-            super(description);
-            this.category = 'T';
+            super(description, Category.TODO);
         }
     }
 
     public static class Deadline extends Task {
         protected String date;
         public Deadline(String description, String date) {
-            super(description);
-            this.category = 'D';
+            super(description, Category.DEADLINE);
             this.date = date;
         }
 
@@ -67,8 +82,7 @@ public class Ekko {
         protected String from;
         protected String to;
         public Event(String description, String from, String to) {
-            super(description);
-            this.category = 'E';
+            super(description, Category.EVENT);
             this.from = from;
             this.to = to;
         }
