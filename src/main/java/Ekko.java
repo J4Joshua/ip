@@ -1,6 +1,11 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Ekko {
     public static ArrayList<Task> list = new ArrayList<>();
 
@@ -96,6 +101,30 @@ public class Ekko {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        String directoryPath = "./data";
+        String filePath = directoryPath + "/ekko.txt";
+
+        File directory = new File(directoryPath);
+
+        File file = new File(filePath);
+
+        try {
+            if (!directory.exists()) {
+                directory.mkdirs();
+                System.out.println("Directory created: " + directoryPath);
+            }
+
+            if (!file.exists()) {
+                file.createNewFile();
+                System.out.println("File created: " + filePath);
+            } else {
+                System.out.println("File already exists: " + filePath);
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while checking/creating the file.");
+            e.printStackTrace();
+        }
+
         System.out.println(
                 "____________________________________________________________\n" +
                         "Hello! I'm Ekko\n" +
@@ -114,7 +143,9 @@ public class Ekko {
                     break;
                 }
 
+                loadIn(list);
                 handleInput(input);
+                storeIn(list);
 
             } catch (EkkoException e) {
                 System.out.println(
@@ -242,6 +273,75 @@ public class Ekko {
                             "____________________________________________________________");
         } else {
             throw new EkkoException("Invalid command");
+        }
+    }
+
+    public static void storeIn(ArrayList<Task> list) {
+        String filePath = "./data/ekko.txt";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (Task task : list) {
+                String type = task.getCategory().toString();
+                String status = task.isDone ? "X" : " ";
+                String description = task.description;
+
+                if (task instanceof Deadline) {
+                    writer.write(type + " | " + status + " | " + description + " | " + ((Deadline) task).date);
+                } else if (task instanceof Event) {
+                    writer.write(type + " | " + status + " | " + description + " | " + ((Event) task).from + " | " + ((Event) task).to);
+                } else {
+                    writer.write(type + " | " + status + " | " + description);
+                }
+                writer.newLine();
+            }
+            System.out.println("Tasks successfully saved to file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving tasks.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadIn(ArrayList<Task> list) {
+        String filePath = "./data/ekko.txt";
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            list.clear();
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" \\| ");
+                if (parts.length < 3) continue;
+
+                String type = parts[0];
+                boolean isDone = parts[1].equals("X");
+                String description = parts[2];
+
+                Task task;
+                if (type.equals("T")) {
+                    task = new ToDo(description);
+                } else if (type.equals("D") && parts.length == 4) {
+                    task = new Deadline(description, parts[3]);
+                } else if (type.equals("E") && parts.length == 5) {
+                    task = new Event(description, parts[3], parts[4]);
+                } else {
+                    continue;
+                }
+
+                if (isDone) {
+                    task.markDone();
+                }
+
+                list.add(task);
+            }
+            System.out.println("Tasks successfully loaded from file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while loading tasks.");
+            e.printStackTrace();
         }
     }
 }
