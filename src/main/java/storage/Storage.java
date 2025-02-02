@@ -82,10 +82,11 @@ public class Storage {
                 String status = task.isDone() ? "X" : " ";
                 String description = task.getDescription();
                 if (task instanceof Deadline) {
-                    writer.write(type + " | " + status + " | " + description + " | " + ((Deadline) task).getFormattedDate());
+                    writer.write(type + " | " + status + " | " + description + " | "
+                            + ((Deadline) task).getFormattedDate());
                 } else if (task instanceof Event) {
-                    writer.write(type + " | " + status + " | " + description + " | " +
-                            ((Event) task).getFormattedFrom() + " | " + ((Event) task).getFormattedTo());
+                    writer.write(type + " | " + status + " | " + description + " | "
+                            + ((Event) task).getFormattedFrom() + " | " + ((Event) task).getFormattedTo());
                 } else {
                     writer.write(type + " | " + status + " | " + description);
                 }

@@ -55,7 +55,8 @@ public class Ekko {
                 ui.showLine();
                 for (int i = 0; i < tasks.size(); i++) {
                     Task task = tasks.getTask(i);
-                    ui.showMessage(" " + (i + 1) + ". " + "[" + task.getCategory() + "]" + "[" + task.getStatusIcon() + "] " + task);
+                    ui.showMessage(" " + (i + 1) + ". " + "[" + task.getCategory() + "]"
+                            + "[" + task.getStatusIcon() + "] " + task);
                 }
                 ui.showLine();
                 return;
@@ -64,7 +65,8 @@ public class Ekko {
                         input.startsWith("mark") || input.startsWith("unmark") || input.equals("bye")) {
                     throw new EkkoException("Cannot be blank after command");
                 }
-                throw new EkkoException("Invalid command! Available commands: todo, deadline, event, list, mark, unmark, delete, bye");
+                throw new EkkoException("Invalid command! " +
+                        "Available commands: todo, deadline, event, list, mark, unmark, delete, bye");
             }
         }
 
@@ -130,7 +132,8 @@ public class Ekko {
             Task removedTask = tasks.delete(index);
             ui.showLine();
             ui.showMessage("Noted. I've removed this task:");
-            ui.showMessage("[" + removedTask.getCategory() + "][" + removedTask.getStatusIcon() + "] " + removedTask);
+            ui.showMessage("[" + removedTask.getCategory()
+                    + "][" + removedTask.getStatusIcon() + "] " + removedTask);
             ui.showMessage("Now you have " + tasks.size() + " tasks in the list.");
             ui.showLine();
         } else {
