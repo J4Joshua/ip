@@ -3,6 +3,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import exception.EkkoException;
+
+/**
+ * Represents a Deadline task that has a start date/time.
+ */
 public class Deadline extends Task {
     private LocalDateTime dateTime;
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");

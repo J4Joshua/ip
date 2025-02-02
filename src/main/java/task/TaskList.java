@@ -3,6 +3,9 @@ package task;
 import java.util.ArrayList;
 import exception.EkkoException;
 
+/**
+ * Manages a list of tasks.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
 

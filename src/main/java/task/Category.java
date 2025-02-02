@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Manage the symbols for each task.
+ */
 public enum Category {
     TODO("T"),
     DEADLINE("D"),

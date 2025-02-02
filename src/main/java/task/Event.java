@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import exception.EkkoException;
 
+/**
+ * Represents an Event task that has a start date/time and an end date/time.
+ */
 public class Event extends Task {
     private LocalDateTime from;
     private LocalDateTime to;

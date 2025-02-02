@@ -7,6 +7,9 @@ import task.ToDo;
 import exception.EkkoException;
 import storage.Storage;
 
+/**
+ * Main app entry point.
+ */
 public class Ekko {
     private Ui ui;
     private TaskList tasks;

@@ -9,6 +9,9 @@ import task.ToDo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Handles loading tasks from a file and saving tasks to a file.
+ */
 public class Storage {
     private String filePath;
 

@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Parent class task.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
