@@ -1,25 +1,37 @@
 package task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import exception.EkkoException;
+
 public class Event extends Task {
-    protected String from;
-    protected String to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
-    public Event(String description, String from, String to) {
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+
+    public Event(String description, String fromString, String toString) throws EkkoException {
         super(description, Category.EVENT);
-        this.from = from;
-        this.to = to;
+        try {
+            this.from = LocalDateTime.parse(fromString, INPUT_FORMATTER);
+            this.to = LocalDateTime.parse(toString, INPUT_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new EkkoException("Invalid event date format! Use: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
+        }
     }
 
-    public String getFrom() {
-        return from;
+    public String getFormattedFrom() {
+        return from.format(OUTPUT_FORMATTER);
     }
 
-    public String getTo() {
-        return to;
+    public String getFormattedTo() {
+        return to.format(OUTPUT_FORMATTER);
     }
 
     @Override
     public String toString() {
-        return this.description + " (from: " + from + " to: " + to + ")";
+        return this.description + " (from: " + getFormattedFrom() + " to: " + getFormattedTo() + ")";
     }
 }
