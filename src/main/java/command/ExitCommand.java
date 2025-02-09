@@ -1,9 +1,8 @@
 package command;
 
+import storage.Storage;
 import task.TaskList;
 import ui.Ui;
-import storage.Storage;
-import exception.EkkoException;
 
 /**
  * Terminates the chatbot.

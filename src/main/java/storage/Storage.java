@@ -1,13 +1,18 @@
 package storage;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import exception.EkkoException;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.ToDo;
-
-import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Handles loading tasks from a file and saving tasks to a file.
@@ -15,6 +20,11 @@ import java.util.ArrayList;
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a new {@code Storage} object with the specified file path.
+     *
+     * @param filePath The path to the file where tasks are stored.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         try {
@@ -36,6 +46,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the file and returns them as an ArrayList.
+     *
+     * @return An {@link ArrayList} of tasks loaded from the file.
+     * @throws EkkoException If an error occurs while reading the file.
+     */
     public ArrayList<Task> load() throws EkkoException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -48,8 +64,9 @@ public class Storage {
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" \\| ");
-                if (parts.length < 3)
+                if (parts.length < 3) {
                     continue;
+                }
 
                 String type = parts[0];
                 boolean isDone = parts[1].equals("X");
@@ -78,6 +95,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the provided list of tasks to the file.
+     *
+     * @param tasks The {@link ArrayList} of tasks to be saved.
+     * @throws EkkoException If an error occurs while writing to the file.
+     */
     public void save(ArrayList<Task> tasks) throws EkkoException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {

@@ -1,18 +1,24 @@
 import command.Command;
-import parser.Parser;
 import exception.EkkoException;
+import parser.Parser;
+import storage.Storage;
 import task.TaskList;
 import ui.Ui;
-import storage.Storage;
 
 /**
- * The main chatbot application.
+ * The main chatbot application that handles user interaction,
+ * task management, and storage operations.
  */
 public class Ekko {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs an {@code Ekko} chatbot with the specified file path for storage.
+     *
+     * @param filePath The path to the data file for storing tasks.
+     */
     public Ekko(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -24,6 +30,10 @@ public class Ekko {
         }
     }
 
+    /**
+     * Starts the chatbot, displaying the welcome message and handling user input
+     * until the exit command is issued.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -43,6 +53,11 @@ public class Ekko {
         }
     }
 
+    /**
+     * The main entry point of the application.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         new Ekko("data/ekko.txt").run();
     }
