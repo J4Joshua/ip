@@ -54,6 +54,13 @@ public class Ekko {
     }
 
     /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Ekko heard: " + input;
+    }
+
+    /**
      * The main entry point of the application.
      *
      * @param args Command-line arguments (not used).
