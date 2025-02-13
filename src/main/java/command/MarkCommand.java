@@ -4,7 +4,6 @@ import exception.EkkoException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
-import ui.Ui;
 
 /**
  * Marks a task as done.
@@ -17,12 +16,10 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws EkkoException {
+    public String executeAndGetResponse(TaskList tasks, Storage storage) throws EkkoException {
         Task task = tasks.getTask(index);
         task.markDone();
-        ui.showLine();
-        ui.showMessage("Nice! I've marked this task as done:");
-        ui.showMessage("[" + task.getStatusIcon() + "] " + task);
-        ui.showLine();
+        return "Nice! I've marked this task as done:\n"
+                + "[" + task.getStatusIcon() + "] " + task;
     }
 }

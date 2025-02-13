@@ -3,28 +3,18 @@ package command;
 import exception.EkkoException;
 import storage.Storage;
 import task.TaskList;
-import ui.Ui;
 
 /**
- * Represents an executable command.
+ * Represents an executable command in the chatbot.
  */
 public abstract class Command {
     /**
-     * Executes the command.
+     * Executes the command and returns the response as a string.
      *
-     * @param tasks The task list.
-     * @param ui The user interface.
-     * @param storage The storage handler.
-     * @throws EkkoException If execution fails.
+     * @param tasks   The task list.
+     * @param storage The storage instance.
+     * @return The response message after execution.
+     * @throws EkkoException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws EkkoException;
-
-    /**
-     * Determines if the command signals the program to exit.
-     *
-     * @return True if this command exits the program, false otherwise.
-     */
-    public boolean isExit() {
-        return false;
-    }
+    public abstract String executeAndGetResponse(TaskList tasks, Storage storage) throws EkkoException;
 }

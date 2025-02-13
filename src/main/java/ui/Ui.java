@@ -1,71 +1,55 @@
 package ui;
 
-import java.util.Scanner;
-
 /**
- * Handles interactions with the user, including displaying messages,
- * reading user commands, and showing errors.
+ * Handles interactions with the user by providing formatted messages for display in the GUI.
  */
 public class Ui {
-    private Scanner scanner;
 
     /**
-     * Initializes the {@code Ui} with a new {@link Scanner} for reading user input.
-     */
-    public Ui() {
-        scanner = new Scanner(System.in);
-    }
-
-    /**
-     * Displays a welcome message to the user when the program starts.
-     */
-    public void showWelcome() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Ekko");
-        System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Reads the next line of input from the user and trims any leading or trailing whitespace.
+     * Returns a welcome message to be displayed in the GUI when the program starts.
      *
-     * @return The trimmed user command as a {@link String}.
+     * @return The formatted welcome message.
      */
-    public String readCommand() {
-        return scanner.nextLine().trim();
+    public String getWelcomeMessage() {
+        return "Hello! I'm Ekko\nWhat can I do for you?";
     }
 
     /**
-     * Displays a horizontal line separator to visually separate sections of output.
-     */
-    public void showLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Displays a custom message to the user.
+     * Returns a horizontal line separator for structuring GUI messages.
      *
-     * @param message The message to be displayed.
+     * @return A horizontal separator line.
      */
-    public void showMessage(String message) {
-        System.out.println(message);
+    public String getLineSeparator() {
+        return "____________________________________________________________";
     }
 
     /**
-     * Displays an error message to the user.
+     * Returns a formatted message for displaying general information to the user.
      *
-     * @param message The error message to be displayed, prefixed with "Error: ".
+     * @param message The message content.
+     * @return The formatted message.
      */
-    public void showError(String message) {
-        System.out.println("Error: " + message);
+    public String formatMessage(String message) {
+        return message;
     }
 
     /**
-     * Displays an error message related to loading tasks.
+     * Returns a formatted error message.
      *
-     * @param message The error message to be displayed, prefixed with "Error loading tasks: ".
+     * @param message The error message content.
+     * @return The formatted error message prefixed with "Error: ".
      */
-    public void showLoadingError(String message) {
-        System.out.println("Error loading tasks: " + message);
+    public String formatErrorMessage(String message) {
+        return "Error: " + message;
+    }
+
+    /**
+     * Returns a formatted message for loading errors.
+     *
+     * @param message The error details.
+     * @return The formatted error message prefixed with "Error loading tasks: ".
+     */
+    public String formatLoadingErrorMessage(String message) {
+        return "Error loading tasks: " + message;
     }
 }

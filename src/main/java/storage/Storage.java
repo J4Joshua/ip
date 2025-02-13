@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import exception.EkkoException;
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.ToDo;
+import task.*;
 
 /**
  * Handles loading tasks from a file and saving tasks to a file.
@@ -101,9 +98,10 @@ public class Storage {
      * @param tasks The {@link ArrayList} of tasks to be saved.
      * @throws EkkoException If an error occurs while writing to the file.
      */
-    public void save(ArrayList<Task> tasks) throws EkkoException {
+    public void save(TaskList tasks) throws EkkoException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (Task task : tasks) {
+            for (int i =0; i<tasks.size(); i++) {
+                Task task = tasks.getTask(i);
                 String type = task.getCategory().toString();
                 String status = task.isDone() ? "X" : " ";
                 String description = task.getDescription();

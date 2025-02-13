@@ -6,8 +6,7 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * The main chatbot application that handles user interaction,
- * task management, and storage operations.
+ * The main chatbot application that processes user input and interacts with the GUI.
  */
 public class Ekko {
     private Storage storage;
@@ -15,7 +14,7 @@ public class Ekko {
     private Ui ui;
 
     /**
-     * Constructs an {@code Ekko} chatbot with the specified file path for storage.
+     * Initializes Ekko with the specified file path for storage.
      *
      * @param filePath The path to the data file for storing tasks.
      */
@@ -25,47 +24,31 @@ public class Ekko {
         try {
             tasks = new TaskList(storage.load());
         } catch (EkkoException e) {
-            ui.showLoadingError(e.getMessage());
             tasks = new TaskList();
         }
     }
 
     /**
-     * Starts the chatbot, displaying the welcome message and handling user input
-     * until the exit command is issued.
+     * Returns a welcome message to be displayed in the GUI.
+     *
+     * @return The welcome message.
      */
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                ui.showLine();
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (EkkoException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
+    public String getWelcomeMessage() {
+        return ui.getWelcomeMessage();
     }
 
     /**
-     * Generates a response for the user's chat message.
+     * Processes user input and returns a response.
+     *
+     * @param input The user's input message.
+     * @return The chatbot's response.
      */
     public String getResponse(String input) {
-        return "Ekko heard: " + input;
-    }
-
-    /**
-     * The main entry point of the application.
-     *
-     * @param args Command-line arguments (not used).
-     */
-    public static void main(String[] args) {
-        new Ekko("data/ekko.txt").run();
+        try {
+            Command c = Parser.parse(input);
+            return c.executeAndGetResponse(tasks, storage);
+        } catch (EkkoException e) {
+            return ui.formatErrorMessage(e.getMessage());
+        }
     }
 }

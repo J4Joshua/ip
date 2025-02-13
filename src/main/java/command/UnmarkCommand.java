@@ -4,7 +4,6 @@ import exception.EkkoException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
-import ui.Ui;
 
 /**
  * Marks a task as not done.
@@ -17,12 +16,10 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws EkkoException {
+    public String executeAndGetResponse(TaskList tasks, Storage storage) throws EkkoException {
         Task task = tasks.getTask(index);
         task.markUndone();
-        ui.showLine();
-        ui.showMessage("OK, I've marked this task as not done yet:");
-        ui.showMessage("[" + task.getStatusIcon() + "] " + task);
-        ui.showLine();
+        return "OK, I've marked this task as not done yet:\n"
+                + "[" + task.getStatusIcon() + "] " + task;
     }
 }

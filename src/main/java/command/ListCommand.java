@@ -11,16 +11,15 @@ import ui.Ui;
  */
 public class ListCommand extends Command {
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws EkkoException {
-        if (tasks.size() == 0) {
-            throw new EkkoException("List is empty");
-        }
-
-        ui.showLine();
+    public String executeAndGetResponse(TaskList tasks, Storage storage) throws EkkoException {
+        StringBuilder response = new StringBuilder("Here are the matching tasks:\n");
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.getTask(i);
-            ui.showMessage(" " + (i + 1) + ". [" + task.getCategory() + "][" + task.getStatusIcon() + "] " + task);
+            response.append((i + 1))
+                    .append(". [").append(task.getCategory())
+                    .append("][").append(task.getStatusIcon())
+                    .append("] ").append(task).append("\n");
         }
-        ui.showLine();
+        return response.toString();
     }
 }

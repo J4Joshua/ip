@@ -4,7 +4,6 @@ import exception.EkkoException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
-import ui.Ui;
 
 /**
  * Searches for tasks by keyword.
@@ -17,19 +16,24 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws EkkoException {
-        ui.showLine();
+    public String executeAndGetResponse(TaskList tasks, Storage storage) throws EkkoException {
+        StringBuilder response = new StringBuilder("Here are the matching tasks:\n");
         boolean found = false;
+
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.getTask(i);
             if (task.getDescription().contains(keyword)) {
-                ui.showMessage(" " + (i + 1) + ". [" + task.getCategory() + "][" + task.getStatusIcon() + "] " + task);
+                response.append((i + 1))
+                        .append(". [").append(task.getCategory())
+                        .append("][").append(task.getStatusIcon())
+                        .append("] ").append(task).append("\n");
                 found = true;
             }
         }
+
         if (!found) {
-            ui.showMessage("No matching tasks found.");
+            return "No matching tasks found.";
         }
-        ui.showLine();
+        return response.toString();
     }
 }
