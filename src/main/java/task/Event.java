@@ -39,15 +39,20 @@ public class Event extends Task {
      * @throws EkkoException If the date format is invalid.
      */
     private LocalDateTime parseDateTime(String dateTimeString) throws EkkoException {
+        assert dateTimeString != null : "DateTime string should not be null";
+
+        // Try parsing with the primary format
         try {
             return LocalDateTime.parse(dateTimeString, INPUT_FORMATTER);
-        } catch (DateTimeParseException e1) {
-            try {
-                return LocalDateTime.parse(dateTimeString, ALT_FORMATTER);
-            } catch (DateTimeParseException e2) {
-                throw new EkkoException("Invalid event date format! Use: d/M/yyyy HHmm (e.g., 2/12/2019 1800) or "
-                        + "MMM dd yyyy, h:mm a (e.g., Dec 02 2019, 6:00 PM)");
-            }
+        } catch (DateTimeParseException ignored) {
+            // If it fails, try the alternative format
+        }
+
+        try {
+            return LocalDateTime.parse(dateTimeString, ALT_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new EkkoException("Invalid event date format! Use: d/M/yyyy HHmm (e.g., 2/12/2019 1800) or "
+                    + "MMM dd yyyy, h:mm a (e.g., Dec 02 2019, 6:00 PM)");
         }
     }
 
