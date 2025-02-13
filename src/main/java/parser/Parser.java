@@ -11,20 +11,18 @@ import exception.EkkoException;
 
 /**
  * Parses user input and returns the corresponding Command object.
- *
- * @return A Command object based on the user's input.
- * @throws EkkoException If the command is invalid or input is malformed.
  */
 public class Parser {
 
     /**
-     * Parses the user's input and returns the corresponding Command object.
+     * Parses the user's input into a Command.
      *
      * @param input The user input string.
-     * @return A Command object corresponding to the user's command.
-     * @throws EkkoException If the command is invalid or improperly formatted.
+     * @return A Command object based on the user's input.
+     * @throws EkkoException If the command is invalid or input is malformed.
      */
     public static Command parse(String input) throws EkkoException {
+        assert input != null : "Input should not be null";
         String[] inputArr = input.split(" ", 2);
         String commandWord = inputArr[0];
 
@@ -33,18 +31,19 @@ public class Parser {
             return new ListCommand();
 
         case "mark":
+            assert inputArr.length == 2 : "Mark command must have an index";
             return new MarkCommand(parseIndex(inputArr));
 
         case "unmark":
+            assert inputArr.length == 2 : "Unmark command must have an index";
             return new UnmarkCommand(parseIndex(inputArr));
 
         case "find":
-            if (inputArr.length < 2) {
-                throw new EkkoException("Please provide a keyword to search.");
-            }
+            assert inputArr.length == 2 : "Find command must have a keyword";
             return new FindCommand(inputArr[1]);
 
         case "delete":
+            assert inputArr.length == 2 : "Delete command must have an index";
             return new DeleteCommand(parseIndex(inputArr));
 
         case "bye":
@@ -63,7 +62,8 @@ public class Parser {
      * @throws EkkoException If the index is missing or in an invalid format.
      */
     private static int parseIndex(String[] inputArr) throws EkkoException {
-        if (inputArr.length < 2 || !inputArr[1].matches("\\d+")) {
+        assert inputArr.length == 2 : "Input must have exactly 2 parts for index parsing";
+        if (!inputArr[1].matches("\\d+")) {
             throw new EkkoException("Invalid index format.");
         }
         return Integer.parseInt(inputArr[1]) - 1;
