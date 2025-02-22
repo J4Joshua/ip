@@ -1,2 +1,2 @@
-D |   | sdsd | Dec 02 2019, 6:00 pm
-T |   | hi
+D |   | Submit report | Oct 06 2025, 6:00 pm
+E |   | Team meeting | Oct 12 2025, 2:00 pm | Oct 12 2025, 4:00 pm
