@@ -22,15 +22,15 @@ public class MainWindow extends AnchorPane {
     private Ekko ekko;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Ekko.png"));
+    private Image ekkoImage = new Image(this.getClass().getResourceAsStream("/images/Ekko.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
-    public void setDuke(Ekko e) {
+    /** Injects the Ekko instance */
+    public void setEkko(Ekko e) {
         ekko = e;
     }
 
@@ -45,7 +45,7 @@ public class MainWindow extends AnchorPane {
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getEkkoDialog(response, ekkoImage)
         );
 
         userInput.clear();

@@ -2,7 +2,7 @@
 _A smart task management chatbot with a GUI interface_
 
 ## **Product Screenshot**
-![Ekko](ProductScreenshot.png)
+![Ekko](Ui.png)
 
 ## **Introduction**  
 Ekko is an intelligent chatbot that helps users manage their tasks efficiently. Users can add, delete, find, and mark tasks using simple commands. Ekko provides an intuitive **Graphical User Interface (GUI)** to interact with users effectively.
